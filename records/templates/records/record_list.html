@@ -1,0 +1,36 @@
+{% extends 'records/base.html' %}
+{% block title %}My Records{% endblock %}
+
+{% block content %}
+<h1>My Records</h1>
+
+{% if records %}
+  <table class="table table-hover table-striped">
+    <thead class="table-dark">
+      <tr>
+        <th>Name</th>
+        <th>City</th>
+        <th>Phone</th>
+        <th>Created</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for record in records %}
+      <tr>
+        <td>{{ record.name }}</td>
+        <td>{{ record.city }}</td>
+        <td>{{ record.phone }}</td>
+        <td>{{ record.created_at|date:"d M Y H:i" }}</td>
+        <td>
+          <a href="{% url 'record_update' record.pk %}" class="btn btn-sm btn-outline-primary">Edit</a>
+          <a href="{% url 'record_delete' record.pk %}" class="btn btn-sm btn-outline-danger">Delete</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% else %}
+  <div class="alert alert-info">No records yet. <a href="{% url 'record_create' %}">Add one</a>!</div>
+{% endif %}
+{% endblock %}
